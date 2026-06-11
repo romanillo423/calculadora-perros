@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¿Cuántos años tienes en años perro?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #F7F3EC;
+      --bark:     #2B1F14;
+      --amber:    #C97D2E;
+      --amber-lt: #E8A95A;
+      --paw:      #8B5E3C;
+      --paw-lt:   #D4A97A;
+      --white:    #FFFDF9;
+      --muted:    #7A6A5A;
+      --shadow:   rgba(43,31,20,.12);
+    }
+
+    body {
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--bark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    /* ── Header ── */
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .paw-icon {
+      font-size: 3rem;
+      line-height: 1;
+      display: block;
+      margin-bottom: .4rem;
+      animation: waggle 2.4s ease-in-out infinite;
+    }
+    @keyframes waggle {
+      0%,100% { transform: rotate(-8deg); }
+      50%      { transform: rotate(8deg); }
+    }
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--bark);
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--amber);
+    }
+    .subtitle {
+      margin-top: .5rem;
+      color: var(--muted);
+      font-size: .95rem;
+      font-weight: 500;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: 0 8px 40px var(--shadow);
+      padding: 2.4rem 2.4rem 2rem;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    /* ── Mode toggle ── */
+    .toggle-group {
+      display: flex;
+      background: var(--cream);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 2rem;
+    }
+    .toggle-btn {
+      flex: 1;
+      padding: .55rem .5rem;
+      border: none;
+      border-radius: 9px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--muted);
+      transition: background .22s, color .22s, box-shadow .22s;
+    }
+    .toggle-btn.active {
+      background: var(--amber);
+      color: var(--white);
+      box-shadow: 0 2px 12px rgba(201,125,46,.35);
+    }
+
+    /* ── Form ── */
+    label {
+      display: block;
+      font-size: .82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      color: var(--paw);
+      margin-bottom: .45rem;
+    }
+
+    .field { margin-bottom: 1.3rem; }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: .85rem 1rem;
+      border: 2px solid #E5DDD4;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: var(--bark);
+      background: var(--cream);
+      transition: border-color .2s, box-shadow .2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: var(--amber);
+      box-shadow: 0 0 0 4px rgba(201,125,46,.15);
+    }
+    input[type="number"]::-webkit-inner-spin-button { opacity: .5; }
+
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute;
+      right: 1rem; top: 50%;
+      transform: translateY(-50%);
+      color: var(--paw);
+      pointer-events: none;
+    }
+
+    /* ── Slider ── */
+    .slider-wrap { display: flex; align-items: center; gap: .8rem; }
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(to right, var(--amber) 0%, var(--amber) var(--pct,0%), #E5DDD4 var(--pct,0%));
+      cursor: pointer;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--amber);
+      box-shadow: 0 2px 8px rgba(201,125,46,.4);
+      border: 3px solid var(--white);
+      transition: transform .15s;
+    }
+    input[type="range"]:active::-webkit-slider-thumb { transform: scale(1.2); }
+    .slider-val {
+      min-width: 44px;
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--amber);
+      text-align: right;
+    }
+
+    /* ── Button ── */
+    .btn {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--amber), var(--paw));
+      color: var(--white);
+      font-family: 'Fraunces', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: .02em;
+      box-shadow: 0 4px 20px rgba(139,94,60,.35);
+      transition: transform .15s, box-shadow .15s;
+      margin-top: .4rem;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(139,94,60,.4); }
+    .btn:active { transform: translateY(0); }
+
+    /* ── Result ── */
+    .result {
+      margin-top: 1.6rem;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #FEF5E7, #FAE6CC);
+      border: 2px solid var(--amber-lt);
+      padding: 1.5rem 1.6rem;
+      text-align: center;
+      display: none;
+      animation: popIn .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.92) translateY(8px); }
+      to   { opacity: 1; transform: scale(1)  translateY(0); }
+    }
+    .result.show { display: block; }
+    .result-label {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 600;
+      color: var(--paw);
+    }
+    .result-number {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 10vw, 4.5rem);
+      font-weight: 700;
+      color: var(--bark);
+      line-height: 1;
+      margin: .2rem 0;
+    }
+    .result-number span { color: var(--amber); }
+    .result-sub {
+      font-size: .9rem;
+      color: var(--muted);
+      margin-top: .4rem;
+    }
+    .life-stage {
+      display: inline-block;
+      margin-top: .9rem;
+      padding: .35rem 1rem;
+      border-radius: 99px;
+      font-weight: 600;
+      font-size: .85rem;
+      background: var(--amber);
+      color: var(--white);
+    }
+
+    /* ── Info accordion ── */
+    details {
+      margin-top: 1.4rem;
+      border-radius: 12px;
+      border: 2px solid #E5DDD4;
+      overflow: hidden;
+    }
+    summary {
+      padding: .8rem 1.1rem;
+      cursor: pointer;
+      font-size: .88rem;
+      font-weight: 600;
+      color: var(--muted);
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    summary::after { content: '＋'; }
+    details[open] summary::after { content: '－'; }
+    .info-body {
+      padding: 0 1.1rem 1rem;
+      font-size: .85rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .info-body table { width: 100%; border-collapse: collapse; margin-top: .5rem; }
+    .info-body th, .info-body td { padding: .35rem .5rem; text-align: left; border-bottom: 1px solid #EEE8DF; font-size: .83rem; }
+    .info-body th { font-weight: 600; color: var(--bark); }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 2.5rem;
+      font-size: .78rem;
+      color: var(--muted);
+      text-align: center;
+      opacity: .7;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 1.8rem 1.4rem 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <span class="paw-icon">🐾</span>
+  <h1>¿Cuánto tienes en <em>años perro</em>?</h1>
+  <p class="subtitle">Convierte edad humana ↔ edad canina al instante</p>
+</header>
+
+<div class="card">
+
+  <!-- Mode toggle -->
+  <div class="toggle-group" role="group" aria-label="Dirección de conversión">
+    <button class="toggle-btn active" id="btn-humano" onclick="setMode('humano')">🧑 Humano → Perro</button>
+    <button class="toggle-btn" id="btn-perro" onclick="setMode('perro')">🐶 Perro → Humano</button>
+  </div>
+
+  <!-- Edad -->
+  <div class="field">
+    <label id="age-label" for="age-slider">Tu edad (años)</label>
+    <div class="slider-wrap">
+      <input type="range" id="age-slider" min="1" max="100" value="30"
+             oninput="syncSlider(this)"/>
+      <span class="slider-val" id="slider-display">30</span>
+    </div>
+    <!-- fallback input -->
+    <input type="number" id="age-input" min="1" max="100" value="30"
+           placeholder="O escribe aquí…" oninput="syncInput(this)"
+           style="margin-top:.65rem"/>
+  </div>
+
+  <!-- Raza / tamaño -->
+  <div class="field" id="breed-field">
+    <label for="size-select">Tamaño del perro</label>
+    <div class="select-wrap">
+      <select id="size-select">
+        <option value="pequeno">Pequeño  (< 10 kg) — Chihuahua, Poodle…</option>
+        <option value="mediano" selected>Mediano (10–25 kg) — Labrador, Beagle…</option>
+        <option value="grande">Grande  (25–45 kg) — Pastor Alemán, Husky…</option>
+        <option value="gigante">Gigante (> 45 kg) — San Bernardo, Gran Danés…</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn" onclick="calcular()">Calcular 🐕</button>
+
+  <!-- Result -->
+  <div class="result" id="result">
+    <div class="result-label" id="result-label">Equivale a…</div>
+    <div class="result-number" id="result-num">—</div>
+    <div class="result-sub" id="result-sub"></div>
+    <div class="life-stage" id="life-stage"></div>
+  </div>
+
+  <!-- Info -->
+  <details>
+    <summary>¿Cómo se calcula? &nbsp;</summary>
+    <div class="info-body">
+      <p>El mito del "1 año humano = 7 años perro" es demasiado simple. Los perros maduran muy rápido de cachorros y después más despacio. El tamaño también importa: las razas grandes envejecen antes.</p>
+      <table>
+        <tr><th>Edad perro</th><th>Pequeño</th><th>Mediano</th><th>Grande</th><th>Gigante</th></tr>
+        <tr><td>1</td><td>15</td><td>15</td><td>15</td><td>15</td></tr>
+        <tr><td>2</td><td>24</td><td>24</td><td>24</td><td>24</td></tr>
+        <tr><td>5</td><td>33</td><td>36</td><td>40</td><td>48</td></tr>
+        <tr><td>10</td><td>56</td><td>60</td><td>66</td><td>78</td></tr>
+        <tr><td>15</td><td>76</td><td>83</td><td>93</td><td>—</td></tr>
+      </table>
+      <p style="margin-top:.6rem">Basado en la escala del American Veterinary Medical Association (AVMA) y estudios de bienestar canino comparativo.</p>
+    </div>
+  </details>
+
+</div>
+
+<footer>Calculadora orientativa · No sustituye consejo veterinario profesional</footer>
+
+<script>
+  /* ── Conversion tables ──────────────────────────────────────────── */
+  // dog-age → human-age per size
+  // Source: AVMA + AKC comparative aging charts
+  const TABLES = {
+    pequeno: [
+      [0,0],[1,15],[2,24],[3,28],[4,32],[5,33],[6,38],[7,44],[8,48],[9,52],
+      [10,56],[11,60],[12,64],[13,68],[14,72],[15,76],[16,80],[17,84],[18,88],[19,92],[20,96]
+    ],
+    mediano: [
+      [0,0],[1,15],[2,24],[3,28],[4,32],[5,36],[6,42],[7,47],[8,51],[9,56],
+      [10,60],[11,65],[12,69],[13,74],[14,78],[15,83],[16,87]
+    ],
+    grande: [
+      [0,0],[1,15],[2,24],[3,28],[4,32],[5,40],[6,45],[7,50],[8,55],[9,61],
+      [10,66],[11,72],[12,77],[13,82],[14,88],[15,93]
+    ],
+    gigante: [
+      [0,0],[1,15],[2,24],[3,28],[4,36],[5,48],[6,55],[7,61],[8,67],[9,72],
+      [10,78],[11,86],[12,92],[13,97]
+    ]
+  };
+
+  function dogToHuman(dogAge, size) {
+    const t = TABLES[size];
+    if (dogAge <= 0) return 0;
+    if (dogAge >= t[t.length-1][0]) return t[t.length-1][1];
+    for (let i = 1; i < t.length; i++) {
+      if (dogAge <= t[i][0]) {
+        const [d0,h0] = t[i-1], [d1,h1] = t[i];
+        const ratio = (dogAge - d0) / (d1 - d0);
+        return Math.round(h0 + ratio * (h1 - h0));
+      }
+    }
+    return t[t.length-1][1];
+  }
+
+  function humanToDog(humanAge, size) {
+    const t = TABLES[size];
+    const maxH = t[t.length-1][1];
+    if (humanAge <= 0) return 0;
+    if (humanAge >= maxH) return t[t.length-1][0];
+    for (let i = 1; i < t.length; i++) {
+      if (humanAge <= t[i][1]) {
+        const [d0,h0] = t[i-1], [d1,h1] = t[i];
+        const ratio = (humanAge - h0) / (h1 - h0);
+        return +(d0 + ratio * (d1 - d0)).toFixed(1);
+      }
+    }
+    return t[t.length-1][0];
+  }
+
+  function lifeStageHuman(age) {
+    if (age < 13)  return { label: '🧒 Niñez', color: '#6BAED6' };
+    if (age < 18)  return { label: '🧑‍🎓 Adolescencia', color: '#74C476' };
+    if (age < 30)  return { label: '🌟 Adulto joven', color: '#FD8D3C' };
+    if (age < 60)  return { label: '💼 Madurez', color: '#9E9AC8' };
+    if (age < 80)  return { label: '🌿 Senior', color: '#A1D99B' };
+    return { label: '🏆 Gran veterano', color: '#C27BA0' };
+  }
+
+  function lifeStageDog(age, size) {
+    const limits = { pequeno:[2,7,12], mediano:[2,6,10], grande:[2,5,9], gigante:[2,4,7] };
+    const [l] = limits[size] || limits.mediano;
+    if (age <= 1)  return { label: '🐾 Cachorro', color: '#FD8D3C' };
+    if (age <= limits[size][0]) return { label: '🐕 Joven', color: '#74C476' };
+    if (age <= limits[size][1]) return { label: '🐕 Adulto', color: '#6BAED6' };
+    if (age <= limits[size][2]) return { label: '🐕‍🦺 Senior', color: '#9E9AC8' };
+    return { label: '👴🐕 Geriátrico', color: '#C27BA0' };
+  }
+
+  /* ── State ── */
+  let mode = 'humano'; // 'humano' | 'perro'
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById('btn-humano').classList.toggle('active', m === 'humano');
+    document.getElementById('btn-perro').classList.toggle('active', m === 'perro');
+
+    const ageLabel = document.getElementById('age-label');
+    const slider   = document.getElementById('age-slider');
+    const input    = document.getElementById('age-input');
+    const breedField = document.getElementById('breed-field');
+
+    if (m === 'humano') {
+      ageLabel.textContent = 'Tu edad (años)';
+      slider.max = 100; input.max = 100;
+      slider.value = Math.min(slider.value, 100);
+      input.value  = slider.value;
+      breedField.style.display = '';
+    } else {
+      ageLabel.textContent = 'Edad del perro (años)';
+      slider.max = 20; input.max = 20;
+      slider.value = Math.min(Math.max(slider.value, 1), 20);
+      input.value  = slider.value;
+      breedField.style.display = '';
+    }
+    updateSliderTrack(slider);
+    document.getElementById('slider-display').textContent = slider.value;
+    document.getElementById('result').classList.remove('show');
+  }
+
+  function updateSliderTrack(el) {
+    const pct = ((el.value - el.min) / (el.max - el.min)) * 100;
+    el.style.setProperty('--pct', pct + '%');
+  }
+
+  function syncSlider(el) {
+    updateSliderTrack(el);
+    document.getElementById('slider-display').textContent = el.value;
+    document.getElementById('age-input').value = el.value;
+  }
+
+  function syncInput(el) {
+    const v = Math.max(1, Math.min(el.max || 100, el.value || 1));
+    const slider = document.getElementById('age-slider');
+    slider.value = v;
+    updateSliderTrack(slider);
+    document.getElementById('slider-display').textContent = v;
+  }
+
+  function calcular() {
+    const rawAge  = parseFloat(document.getElementById('age-input').value);
+    const size    = document.getElementById('size-select').value;
+
+    if (!rawAge || rawAge < 0) {
+      alert('Por favor introduce una edad válida.');
+      return;
+    }
+
+    let converted, resultLabel, resultSub, stage;
+
+    if (mode === 'humano') {
+      converted   = humanToDog(rawAge, size);
+      resultLabel = 'Equivale aproximadamente a…';
+      resultSub   = `Un perro de ${rawAge} años humanos tiene la vitalidad de un ${converted} años caninos`;
+      const s     = lifeStageDog(converted, size);
+      stage       = s;
+      document.getElementById('result-num').innerHTML =
+        `<span>${converted}</span> año${converted !== 1 ? 's' : ''} perro`;
+    } else {
+      converted   = dogToHuman(rawAge, size);
+      resultLabel = 'En años humanos equivale a…';
+      resultSub   = `Un perro de ${rawAge} años caninos vive como una persona de ${converted} años`;
+      const s     = lifeStageHuman(converted);
+      stage       = s;
+      document.getElementById('result-num').innerHTML =
+        `<span>${converted}</span> años humanos`;
+    }
+
+    document.getElementById('result-label').textContent = resultLabel;
+    document.getElementById('result-sub').textContent   = resultSub;
+
+    const ls = document.getElementById('life-stage');
+    ls.textContent        = stage.label;
+    ls.style.background   = stage.color;
+
+    const r = document.getElementById('result');
+    r.classList.remove('show');
+    void r.offsetWidth; // reflow for re-animation
+    r.classList.add('show');
+  }
+
+  /* init track */
+  updateSliderTrack(document.getElementById('age-slider'));
+</script>
+</body>
+</html>
